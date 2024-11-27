@@ -1,14 +1,10 @@
 package pl.wsb.lab;
-import java.time.LocalDate;
 
-class Patient extends Person {
-    public Patient(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
-        super(firstName, lastName, pesel, birthDate, phoneNumber, eMail);
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
-public class Patient {
-
+public class Person {
     private String firstName;
     private String lastName;
     private String pesel;
@@ -16,8 +12,8 @@ public class Patient {
     private String phoneNumber;
     private String eMail;
 
-    public Patient(String firsName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
-        this.firstName = firsName;
+    public Person(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.pesel = pesel;
         this.birthDate = birthDate;
@@ -57,3 +53,5 @@ public class Patient {
         return eMail;
     }
 }
+
+
