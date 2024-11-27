@@ -20,16 +20,16 @@ public class Clinic {
         return null;
     }
 
-    public List<Person.Doctor> Doctors = new ArrayList<>();
+    public List<Doctor> Doctors = new ArrayList<>();
 
-    public void addDoctor(Person.Doctor doctor) {
+    public void addDoctor(Doctor doctor) {
         Doctors.add(doctor);
     }
 
     //Listowanie lekarzy
     public void printDoctors() {
         System.out.println("List of doctors:");
-        for (Person.Doctor doctor : Doctors) {
+        for (Doctor doctor : Doctors) {
             System.out.println(doctor);
             System.out.println("--------------------");
         }
@@ -37,7 +37,7 @@ public class Clinic {
 
     //Dodanie specializacji
     public void addSpecialization(int doctorId, String specialization) {
-        Person.Doctor doctor = findDoctorById(doctorId);
+        Doctor doctor = findDoctorById(doctorId);
         if (doctor != null) {
             if (!doctor.getSpecialization().contains(specialization)) {
                 doctor.getSpecialization().add(specialization);
@@ -49,8 +49,8 @@ public class Clinic {
     }
 
     //Szukanie po id
-    public Person.Doctor findDoctorById(int id) {
-        for (Person.Doctor doctor : Doctors) {
+    public Doctor findDoctorById(int id) {
+        for (Doctor doctor : Doctors) {
             if (doctor.getDoctorID() == id) {
                 return doctor;
             }
@@ -59,8 +59,8 @@ public class Clinic {
     }
 
     //Szukanie po spejalizacji
-    public Person.Doctor findDoctorBySpec(String spec) {
-        for (Person.Doctor doctor : Doctors) {
+    public Doctor findDoctorBySpec(String spec) {
+        for (Doctor doctor : Doctors) {
             if (doctor.getSpecialization().contains(spec)) {
                 return doctor;
             }

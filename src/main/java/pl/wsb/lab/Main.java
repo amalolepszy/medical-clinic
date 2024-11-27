@@ -79,7 +79,7 @@ public class Main {
                             specialization.add(NewSpec);
                         }
 
-                        Person.Doctor newDoctor = new Person.Doctor(firstName, lastName, pesel, birthDate, phoneNumber, eMail, specialization);
+                        Doctor newDoctor = new Doctor(firstName, lastName, pesel, birthDate, phoneNumber, eMail, specialization);
                         DoctorProfile.addDoctor(newDoctor);
                         System.out.println("Lekarz został dodany.");
                         break;
