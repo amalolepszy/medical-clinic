@@ -7,12 +7,14 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        DoctorProfile doctorlist = new DoctorProfile();
+        Clinic DoctorProfile = new Clinic();
         Scanner scanner = new Scanner(System.in);
+        int DocID = 0;
+        Person doctor = null;
 
-        List<String> ExampleSpec = new ArrayList<>();
-        ExampleSpec.add("Internista");
-        doctorlist.addDoctor(new Doctor("Jan", "Kowalski", "12345678901", LocalDate.of(1980, 5, 15), "123-456-789", "jan.kowalski@example.com", ExampleSpec));
+        //List<String> ExampleSpec = new ArrayList<>();
+        //ExampleSpec.add("Internista");
+        //Person.addDoctor(new Person.Doctor("Jan", "Kowalski", "12345678901", LocalDate.of(1980, 5, 15), "123-456-789", "jan.kowalski@example.com", ExampleSpec));
 
         while (true) {
             System.out.println("1. Dodaj profil lekarza");
@@ -21,88 +23,115 @@ public class Main {
             System.out.println("4. Szukaj lekarza po ID");
             System.out.println("5. Wyszukaj lekarza po specjalizacji");
             System.out.println("6. Wyjście");
-
-            int menu = scanner.nextInt();
-            scanner.nextLine();
-            switch (menu) {
-                //Dodanie lekarza
-                case 1:
-                    System.out.println("Podaj imię:");
-                    String name = scanner.nextLine();
-
-                    System.out.println("Podaj nazwisko:");
-                    String lastname = scanner.nextLine();
-
-                    System.out.println("Podaj pesel:");
-                    String pesel = scanner.nextLine();
-
-                    System.out.println("Podaj date urodzenia (r-m-d):");
-                    String date = scanner.nextLine();
-                    LocalDate birthdate = LocalDate.parse(date);
-
-
-                    System.out.println("Podaj nr tel.:");
-                    String phone = scanner.nextLine();
-
-                    System.out.println("Podaj adres email:");
-                    String email = scanner.nextLine();
-
-                    List<String> specialization = new ArrayList<>();
-                    String NewSpec;
-                    while (true) {
-                        System.out.println("Podaj Wszystkie Specjalizacje(Wpisz x aby zakończyć):");
-                        NewSpec = scanner.nextLine();
-                        if (NewSpec.equals("x")) {
-                            break;
+            try {
+                int menu = scanner.nextInt();
+                scanner.nextLine();
+                switch (menu) {
+                    //Dodanie lekarza
+                    case 1:
+                        System.out.println("Podaj imię:");
+                        String firstName = scanner.nextLine();
+                        if (firstName.isEmpty() || !DoctorProfile.isValidName(firstName)) {
+                            throw new IllegalArgumentException("Imię jest niepoprawne.");
                         }
-                        specialization.add(NewSpec);
-                    }
-                    doctorlist.addDoctor(new Doctor(name, lastname, pesel, birthdate, phone, email, specialization));
-                    break;
+
+                        System.out.println("Podaj nazwisko:");
+                        String lastName = scanner.nextLine();
+                        if (lastName.isEmpty() || !DoctorProfile.isValidName(lastName)) {
+                            throw new IllegalArgumentException("Nazwisko jest niepoprawne.");
+                        }
+
+                        System.out.println("Podaj pesel:");
+                        String pesel = scanner.nextLine();
+                        if (!DoctorProfile.isValidPesel(pesel)) {
+                            throw new IllegalArgumentException("Pesel jest nieprawidłowy. Powinien zawierać 11 cyfr.");
+                        }
+
+                        System.out.println("Podaj datę urodzenia (r-m-d):");
+                        String date = scanner.nextLine();
+                        LocalDate birthDate;
+                        try {
+                            birthDate = LocalDate.parse(date);
+                        } catch (Exception e) {
+                            throw new IllegalArgumentException("Niepoprawny format daty.");
+                        }
+
+                        System.out.println("Podaj nr tel.:");
+                        String phoneNumber = scanner.nextLine();
+                        if (!DoctorProfile.isValidPhone(phoneNumber)) {
+                            throw new IllegalArgumentException("Numer telefonu jest nieprawidłowy.");
+                        }
+
+                        System.out.println("Podaj adres email:");
+                        String eMail = scanner.nextLine();
+                        if (!DoctorProfile.isValidEmail(eMail)) {
+                            throw new IllegalArgumentException("Adres email jest nieprawidłowy.");
+                        }
+
+                        List<String> specialization = new ArrayList<>();
+                        String NewSpec;
+                        while (true) {
+                            System.out.println("Podaj wszystkie specjalizacje (wpisz x aby zakończyć):");
+                            NewSpec = scanner.nextLine();
+                            if (NewSpec.equals("x")) {
+                                break;
+                            }
+                            specialization.add(NewSpec);
+                        }
+
+                        Person.Doctor newDoctor = new Person.Doctor(firstName, lastName, pesel, birthDate, phoneNumber, eMail, specialization);
+                        DoctorProfile.addDoctor(newDoctor);
+                        System.out.println("Lekarz został dodany.");
+                        break;
 
                     //Listowanie lekarzy
-                case 2:
-                    doctorlist.listDoctors();
-                    break;
+                    case 2:
+                        DoctorProfile.printDoctors();
+                        break;
 
                     //Dodanie specjalizacji
-                case 3:
-                    System.out.println("Podaj ID lekarza, któremu chcesz dodać specjalizację:");
-                    int DocID = scanner.nextInt();
-                    scanner.nextLine();
-
-                    Doctor doctor = doctorlist.findDoctorById(DocID);
-                    if (doctor != null) {
-                        System.out.println("Podaj nową specjalizację:");
-                        String newSpec = scanner.nextLine();
-                        doctor.addSpecialization(newSpec);
-                    }
-                    break;
+                    case 3:
+                        System.out.println("Podaj ID lekarza, któremu chcesz dodać specjalizację:");
+                        DocID = scanner.nextInt();
+                        scanner.nextLine();
+                        doctor = DoctorProfile.findDoctorById(DocID);
+                        if (doctor != null) {
+                            System.out.println("Podaj nową specjalizację:");
+                            String newSpec = scanner.nextLine();
+                            DoctorProfile.addSpecialization(DocID, newSpec);
+                        }
+                        break;
 
                     //Szukanie po ID
-                case 4:
-                    System.out.println("Podaj ID lekarza");
-                    DocID = scanner.nextInt();
-                    scanner.nextLine();
+                    case 4:
+                        System.out.println("Podaj ID lekarza");
+                        DocID = scanner.nextInt();
+                        scanner.nextLine();
 
-                    doctor = doctorlist.findDoctorById(DocID);
-                    if (doctor != null) {}
-                    System.out.println(doctor);
-                    break;
+                        doctor = DoctorProfile.findDoctorById(DocID);
+                        if (doctor != null) {
+                        }
+                        System.out.println(doctor);
+                        break;
 
                     //Szukanie po specjalizacji
-                case 5:
-                    System.out.println("Podaj specjalizacje lekarza");
-                    String spec = scanner.nextLine();
+                    case 5:
+                        System.out.println("Podaj specjalizacje lekarza");
+                        String spec = scanner.nextLine();
 
-                    doctor = doctorlist.findDoctorBySpec(spec);
-                    if (doctor != null) {}
-                    System.out.println(doctor);
-                    break;
+                        doctor = DoctorProfile.findDoctorBySpec(spec);
+                        if (doctor != null) {
+                        }
+                        System.out.println(doctor);
+                        break;
                     //Wyjście
-                case 6:
-                    System.exit(0);
-                    break;
+                    case 6:
+                        System.exit(0);
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("Wystąpił błąd, spróbuj ponownie: " + e.getMessage());
+                scanner.nextLine();
             }
         }
     }
