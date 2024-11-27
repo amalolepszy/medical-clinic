@@ -10,7 +10,7 @@ public class Main {
         Clinic DoctorProfile = new Clinic();
         Scanner scanner = new Scanner(System.in);
         int DocID = 0;
-        Person doctor = null;
+        Doctor doctor = null;
 
         //List<String> ExampleSpec = new ArrayList<>();
         //ExampleSpec.add("Internista");

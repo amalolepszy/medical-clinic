@@ -7,15 +7,15 @@ import java.util.ArrayList;
 
 public class Clinic {
 
-    private List<Person> patients;
+    private List<Patient> patients;
 
-    public Person createPatientProfile(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
-        Person newPatient = new Person(firstName, lastName, pesel, birthDate, phoneNumber, eMail);
+    public Patient createPatientProfile(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
+        Patient newPatient = new Patient(firstName, lastName, pesel, birthDate, phoneNumber, eMail);
         this.patients.add(newPatient);
         return newPatient;
     }
 
-    public Person getPatientByPesel(String pesel) {
+    public Patient getPatientByPesel(String pesel) {
         // your implementation
         return null;
     }
