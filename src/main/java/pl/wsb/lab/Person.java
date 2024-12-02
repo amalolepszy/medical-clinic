@@ -2,7 +2,6 @@ package pl.wsb.lab;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
 
 public class Person {
     private String firstName;
@@ -51,6 +50,16 @@ public class Person {
 
     public String getEMail() {
         return eMail;
+    }
+
+    public String toString() {
+        return  "Name: " + getFirstName() + "\n" +
+                "Last Name: " + getLastName() + "\n" +
+                "PESEL: " + getPesel() + "\n" +
+                "Date of birth: " + getBirthDate() + "\n" +
+                "age: " + calculateAge() + "\n" +
+                "Phone number: " + getPhoneNumber() + "\n" +
+                "Email address: " + getEMail();
     }
 }
 

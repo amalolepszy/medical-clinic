@@ -2,28 +2,23 @@ package pl.wsb.lab;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Doctor extends Person {
-    private static int NextID = 1;
     private int doctorID;
-    private List<String> specialization;
+    private Set<String> specialization;
 
-    public Doctor(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail, List<String> specialization) {
+    public Doctor(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail, int doctorId, Set<String> specialization) {
         super(firstName, lastName, pesel, birthDate, phoneNumber, eMail);
-        this.doctorID = NextID++;
-        this.specialization = specialization;
+        this.doctorID = doctorId;
+        this.specialization = new TreeSet<>();
+        this.specialization.addAll(specialization);
     }
 
+    @Override
     public String toString() {
-        return "Doctor ID: " + doctorID + "\n" +
-                "Name: " + getFirstName() + "\n" +
-                "Last Name: " + getLastName() + "\n" +
-                "Pesel: " + getPesel() + "\n" +
-                "Date of birth: " + getBirthDate() + "\n" +
-                "age: " + calculateAge() + "\n" +
-                "Phone number: " + getPhoneNumber() + "\n" +
-                "Email address: " + getEMail() + "\n" +
-                "Specjalization: " + String.join(", ", specialization);
+        return "Doctor ID: " + doctorID + "\n" + super.toString() + "\nSpecialization: " + String.join(", ", specialization);
     }
 
 
@@ -31,7 +26,7 @@ public class Doctor extends Person {
         return doctorID;
     }
 
-    public List<String> getSpecialization() {
+    public Set<String> getSpecialization() {
         return specialization;
     }
 

@@ -3,94 +3,85 @@ package pl.wsb.lab;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 
 
 public class Clinic {
+    private DoctorRegistry doctorRegistry;
+    private PatientRegistry patientRegistry;
 
-    private List<Patient> patients;
-
-    public Patient createPatientProfile(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
-        Patient newPatient = new Patient(firstName, lastName, pesel, birthDate, phoneNumber, eMail);
-        this.patients.add(newPatient);
-        return newPatient;
-    }
-
-    public Patient getPatientByPesel(String pesel) {
-        // your implementation
-        return null;
-    }
-
-    public List<Doctor> Doctors = new ArrayList<>();
-
-    public void addDoctor(Doctor doctor) {
-        Doctors.add(doctor);
-    }
-
-    //Listowanie lekarzy
-    public void printDoctors() {
-        System.out.println("List of doctors:");
-        for (Doctor doctor : Doctors) {
-            System.out.println(doctor);
-            System.out.println("--------------------");
+    // 1.1
+    public void createPatientProfile(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
+        if (patientRegistry.findPatientByPesel(pesel) != null) {
+            throw new IllegalArgumentException("Patient with given PESEL already exists.");
         }
+        patientRegistry.addPatient(firstName, lastName, pesel, birthDate, phoneNumber, eMail);
     }
 
-    //Dodanie specializacji
-    public void addSpecialization(int doctorId, String specialization) {
-        Doctor doctor = findDoctorById(doctorId);
-        if (doctor != null) {
-            if (!doctor.getSpecialization().contains(specialization)) {
-                doctor.getSpecialization().add(specialization);
-                System.out.println("Specjalizacja " + specialization + " została dodana.");
-            } else {
-                throw new IllegalArgumentException("Lekarz posiada już tę specjalizację.");
-            }
+    // 1.2
+    public String getPatientInfoByPesel(String pesel) {
+        Patient patient = patientRegistry.findPatientByPesel(pesel);
+        if (patient == null) {
+            throw new IllegalArgumentException("Patient with given PESEL doesn't exist.");
         }
+        return patient.toString();
     }
 
-    //Szukanie po id
-    public Doctor findDoctorById(int id) {
-        for (Doctor doctor : Doctors) {
-            if (doctor.getDoctorID() == id) {
-                return doctor;
-            }
+    // 1.3
+    public String getPatientsInfoByLastName(String lastName) {
+        List<Patient> found_patients = patientRegistry.findPatientsByLastName(lastName);
+        if (found_patients.isEmpty()) {
+            throw new IllegalArgumentException("There are no patients with given last name.");
         }
-        throw new IllegalArgumentException("Lekarz o podanym ID nie istnieje.");
-    }
 
-    //Szukanie po spejalizacji
-    public Doctor findDoctorBySpec(String spec) {
-        for (Doctor doctor : Doctors) {
-            if (doctor.getSpecialization().contains(spec)) {
-                return doctor;
-            }
+        String result = "-Patients-\n";
+        for (Patient patient : found_patients) {
+            result += patient.toString();
+            result += "\n-----------------------------------------\n";
         }
-        throw new IllegalArgumentException("Lekarz o podanej specjalizacji nie istnieje.");
+        return result;
     }
 
-    //Sprawdzenie długości PESEL
-    public static boolean isValidPesel(String pesel) {
-        if (pesel.length() != 11) {
-            return false;
+    // 2.1
+    public void createDoctorProfile(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail, Set<String> specialization) {
+        doctorRegistry.addDoctor(firstName, lastName, pesel, birthDate, phoneNumber, eMail, specialization);
+    }
+
+    // 2.2
+    public void addSpecializationForDoctor(int doctorId, String specialization) {
+        Doctor doctor = doctorRegistry.findDoctorById(doctorId);
+        if (doctor == null) {
+            throw new IllegalArgumentException("Doctor with given ID doesn't exist: '" + doctorId + "'.");
         }
-        return true;
-    }
-
-    //Sprawdzenie długości numeru telefonu
-    public static boolean isValidPhone(String phone) {
-        if (phone.length() != 9) {
-            return false;
+        if (doctor.getSpecialization().contains(specialization)) {
+            throw new IllegalArgumentException("Doctor already has given specialization: '" + specialization + "'.");
         }
-        return true;
+        doctor.getSpecialization().add(specialization);
+
     }
 
-    //Sprawdzenie adresu email
-    public static boolean isValidEmail(String email) {
-        return email.contains("@") && email.indexOf('.') > email.indexOf('@');
+    // 2.3
+    public String getDoctorInfoById(int doctorId) {
+        Doctor doctor = doctorRegistry.findDoctorById(doctorId);
+        if (doctor == null) {
+            throw new IllegalArgumentException("Doctor with given ID doesn't exist: '" + doctorId + "'.");
+        }
+        return doctor.toString();
     }
 
-    //Sprawdzenie imienia i nazwiska
-    public static boolean isValidName(String name) {
-        return name.chars().allMatch(Character::isLetter);
+    // 2.4
+    public String getDoctorsInfoBySpecialization(String specialization) {
+        List<Doctor> found_doctors = doctorRegistry.findDoctorsBySpecialization(specialization);
+        if (found_doctors.isEmpty()) {
+            throw new IllegalArgumentException("There are no doctors with given specialization.");
+        }
+        String result = "";
+        result = "-Doctors-\n";
+        for (Doctor doctor : found_doctors) {
+            result += doctor.toString();
+            result += "\n-----------------------------------------\n";
+        }
+        return result;
     }
+
 }
