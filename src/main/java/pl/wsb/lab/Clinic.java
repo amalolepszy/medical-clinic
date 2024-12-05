@@ -1,6 +1,7 @@
 package pl.wsb.lab;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
@@ -9,6 +10,7 @@ import java.util.Set;
 public class Clinic {
     private DoctorRegistry doctorRegistry;
     private PatientRegistry patientRegistry;
+    private DoctorShiftRegistry doctorShiftRegistry;
 
     // 1.1
     public void createPatientProfile(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
@@ -82,6 +84,40 @@ public class Clinic {
             result += "\n-----------------------------------------\n";
         }
         return result;
+    }
+
+    // 4.1
+    public void createDoctorShift(int doctorId, LocalTime startShift, LocalTime endShift, LocalDate shiftDay) {
+        Doctor doctor = doctorRegistry.findDoctorById(doctorId);
+        if (doctor == null) {
+            throw new IllegalArgumentException("Doctor with given ID doesn't exist: " + doctorId);
+        }
+        if (startShift == null || endShift == null || shiftDay == null) {
+            throw new IllegalArgumentException("Doctor, start time, end time, and shift day must not be null");
+        }
+        if (startShift.isAfter(endShift) || startShift.equals(endShift)) {
+            throw new IllegalArgumentException("Start time must be before end time");
+        }
+        // sprawdzenie czy dzień został wpisany
+        List<DoctorShift> doctorShifts = doctorShiftRegistry.getDoctorShifts();
+        for (DoctorShift doctorShift : doctorShifts) {
+            if (doctorShift.getAssignedDoctor().equals(doctor) && doctorShift.getShiftDay().isEqual(shiftDay)) {
+                throw new IllegalArgumentException("This doctor has timesheet for that day");
+            }
+        }
+        doctorShiftRegistry.addDoctorShift(doctor, startShift, endShift, shiftDay);
+    }
+
+    // 4.2
+    public List<DoctorShift> getDoctorShiftsForNext7Days(Doctor doctor, LocalDate fromDate) {
+        if (doctor == null || fromDate == null) {
+            throw new IllegalArgumentException("Values can't be null");
+        }
+        if (!doctorRegistry.getDoctors().contains(doctor)) {
+            throw new IllegalArgumentException("This doctor does not exist");
+        }
+
+        return doctorShiftRegistry.listShiftForNextSevenDays(doctor, fromDate);
     }
 
 }

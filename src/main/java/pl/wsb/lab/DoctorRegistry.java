@@ -41,12 +41,6 @@ public class DoctorRegistry {
             if (doctor.getSpecialization().contains(spec)) {
                 result.add(doctor);
             }
-//            for (String specialization : doctor.getSpecialization()) {
-//                if (specialization.equalsIgnoreCase(spec)) {
-//                    result.add(doctor);
-//                    break;
-//                }
-//            }
         }
         return result;
     }
