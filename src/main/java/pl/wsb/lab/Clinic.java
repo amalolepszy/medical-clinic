@@ -41,10 +41,10 @@ public class Clinic {
             throw new IllegalArgumentException("There are no patients with given last name.");
         }
 
-        String result = "-Patients-\n";
+        String result = "---Patients---\n";
         for (Patient patient : found_patients) {
             result += patient.toString();
-            result += "\n-----------------------------------------\n";
+            result += "\n------------\n";
         }
         return result;
     }
@@ -117,17 +117,23 @@ public class Clinic {
     }
 
     // 4.2
-    public List<DoctorShift> getDoctorShiftsForNext7Days(int doctorId) {
+    public String getDoctorShiftsForNext7Days(int doctorId) {
         Doctor doctor = doctorRegistry.findDoctorById(doctorId);
         if (doctor == null) {
             throw new IllegalArgumentException("Doctor with given ID doesn't exist: " + doctorId);
         }
-
-        return doctor.getDoctorShiftRegistry().getShiftsForFollowingSevenDays(LocalDate.now());
+        List<DoctorShift> shifts = doctor.getDoctorShiftRegistry().getShiftsForFollowingSevenDays(LocalDate.now());
+        String result = "";
+        result = "---Doctor Shifts---\n";
+        for (DoctorShift doctorShift : shifts) {
+            result += doctorShift.toString();
+            result += "\n-----------------------------------------\n";
+        }
+        return result;
     }
 
     // 5.1-5.3
-    public void BookAppointment(String patientPesel, int doctor_id, LocalDate date, LocalTime startTime) {
+    public void bookAppointment(String patientPesel, int doctor_id, LocalDate date, LocalTime startTime) {
         Patient patient = patientRegistry.findPatientByPesel(patientPesel);
         if (patient == null) {
             throw new IllegalArgumentException("Patient with given PESEL doesn't exist: " + patientPesel);
