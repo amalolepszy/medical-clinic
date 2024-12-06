@@ -133,7 +133,8 @@ public class Clinic {
     }
 
     // 5.1-5.3
-    public void bookAppointment(String patientPesel, int doctor_id, LocalDate date, LocalTime startTime) {
+    public void bookAppointment(String patientPesel, int doctor_id, LocalDate date, LocalTime startTime,
+            LocalTime endTime) {
         Patient patient = patientRegistry.findPatientByPesel(patientPesel);
         if (patient == null) {
             throw new IllegalArgumentException("Patient with given PESEL doesn't exist: " + patientPesel);
@@ -141,11 +142,9 @@ public class Clinic {
 
         Doctor doctor = doctorRegistry.findDoctorById(doctor_id);
         if (doctor == null) {
-            throw new IllegalArgumentException("This doctor does not exist: " + patientPesel);
+            throw new IllegalArgumentException("This doctor does not exist: " + doctor_id);
         }
         // 5.2
-        int defaultVisitTimeMinutes = 15;
-        LocalTime endTime = startTime.plusMinutes(defaultVisitTimeMinutes);
         if (!doctor.HasShiftDuringDateAndTime(date, startTime, endTime)) {
             throw new IllegalArgumentException("Selected doctor doesn't work at the given time");
         }
@@ -154,6 +153,6 @@ public class Clinic {
             throw new IllegalArgumentException("Selected doctor already has an appointment booked for selected time");
         }
 
-        patientVisitTimeTable.addPatientVisit(date, startTime, endTime, doctor);
+        patientVisitTimeTable.addPatientVisit(date, startTime, endTime, doctor, patient);
     }
 }

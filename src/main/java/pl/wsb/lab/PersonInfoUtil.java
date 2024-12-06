@@ -8,18 +8,12 @@ public final class PersonInfoUtil {
 
     // Sprawdzenie długości PESEL
     public static boolean isValidPesel(String pesel) {
-        if (pesel.length() != 11) {
-            return false;
-        }
-        return true;
+        return pesel.length() == 11 && pesel.matches("[0-9]+");
     }
 
     // Sprawdzenie długości numeru telefonu
     public static boolean isValidPhone(String phone) {
-        if (phone.length() != 9) {
-            return false;
-        }
-        return true;
+        return phone.length() == 9 && phone.matches("[0-9]+");
     }
 
     // Sprawdzenie adresu email

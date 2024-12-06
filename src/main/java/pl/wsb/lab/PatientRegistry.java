@@ -5,20 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientRegistry {
-    private List<Patient> patients;
+    private final List<Patient> patients;
 
     public PatientRegistry() {
         this.patients = new ArrayList<>();
     }
 
-    public void addPatient(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber,
-            String eMail) {
+    public void addPatient(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
         Patient newPatient = new Patient(firstName, lastName, pesel, birthDate, phoneNumber, eMail);
         patients.add(newPatient);
-    }
-
-    public void addPatient(Patient patient) {
-        patients.add(patient);
     }
 
     public Patient findPatientByPesel(String pesel) {
@@ -38,9 +33,5 @@ public class PatientRegistry {
             }
         }
         return result;
-    }
-
-    public List<Patient> getAllPatients() {
-        return patients;
     }
 }

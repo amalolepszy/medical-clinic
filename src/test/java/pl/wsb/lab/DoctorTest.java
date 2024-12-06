@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class DoctorTest {
 
-    private class TestingDoctorFactory {
+    private static class TestingDoctorFactory {
         public Doctor createTestingDoctor() {
             return new Doctor("John", "White", "00000000000", LocalDate.of(2000, 1, 1), "123456789", "test@test.com", 0,
                     Set.of("one", "two", "three"));

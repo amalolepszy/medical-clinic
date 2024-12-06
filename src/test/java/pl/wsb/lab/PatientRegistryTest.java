@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 
 public class PatientRegistryTest {
-    private class TestingPatientRegistryFactory {
+    private static class TestingPatientRegistryFactory {
         public PatientRegistry createTestingPatientRegistry() {
             PatientRegistry registry = new PatientRegistry();
             registry.addPatient("John", "White", "00000000000", LocalDate.of(2000, 1, 1), "123456789", "test@test.com");
@@ -33,12 +33,12 @@ public class PatientRegistryTest {
 
         // no such patient
         Patient not_found = registry.findPatientByPesel("00000000006");
-        Assertions.assertEquals(null, not_found);
+        Assertions.assertNull(not_found);
     }
 
     @Test
     void findByNameTest() {
-        PatientRegistryTest.TestingPatientRegistryFactory factory = new PatientRegistryTest.TestingPatientRegistryFactory();
+        PatientRegistryTest.TestingPatientRegistryFactory factory = new TestingPatientRegistryFactory();
         PatientRegistry registry = factory.createTestingPatientRegistry();
 
         List<Patient> found = registry.findPatientsByLastName("White");

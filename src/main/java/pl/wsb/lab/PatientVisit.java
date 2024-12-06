@@ -5,16 +5,18 @@ import java.time.LocalTime;
 
 public class PatientVisit {
 
-    private LocalDate visitDate;
-    private LocalTime visitStart;
-    private LocalTime visitEnd;
-    private Doctor assignedDoctor;
+    private final LocalDate visitDate;
+    private final LocalTime visitStart;
+    private final LocalTime visitEnd;
+    private final Doctor assignedDoctor;
+    private final Patient patient;
 
-    public PatientVisit(LocalDate visitDate, LocalTime visitStart, LocalTime visitEnd, Doctor assignedDoctor) {
+    public PatientVisit(LocalDate visitDate, LocalTime visitStart, LocalTime visitEnd, Doctor assignedDoctor, Patient patient) {
         this.visitDate = visitDate;
         this.visitStart = visitStart;
         this.visitEnd = visitEnd;
         this.assignedDoctor = assignedDoctor;
+        this.patient = patient;
     }
 
     public Doctor getAssignedDoctor() {

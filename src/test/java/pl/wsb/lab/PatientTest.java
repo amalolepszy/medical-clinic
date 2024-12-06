@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 public class PatientTest {
 
-    private class TestingPatientFactory {
+    private static class TestingPatientFactory {
         public Patient createTestingPatient() {
             return new Patient("John", "White", "00000000000", LocalDate.of(2000, 1, 1), "123456789", "test@test.com");
         }

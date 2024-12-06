@@ -30,8 +30,7 @@ public class DoctorShiftRegistry {
         List<DoctorShift> result = new ArrayList<>();
         LocalDate plus7Days = dayOfVisit.plusDays(7);
         for (DoctorShift shift : doctorShifts) {
-            if (shift.getShiftDay().isEqual(dayOfVisit) ||
-                    (shift.getShiftDay().isAfter(dayOfVisit) && shift.getShiftDay().isBefore(plus7Days))) {
+            if (shift.getShiftDay().isEqual(dayOfVisit) || (shift.getShiftDay().isAfter(dayOfVisit) && shift.getShiftDay().isBefore(plus7Days))) {
                 result.add(shift);
             }
         }
@@ -40,9 +39,7 @@ public class DoctorShiftRegistry {
 
     public boolean IsShiftDuringDateAndTime(LocalDate date, LocalTime startTime, LocalTime endTime) {
         for (DoctorShift doctorShift : doctorShifts) {
-            if (doctorShift.getShiftDay().isEqual(date) &&
-                    (doctorShift.getShiftStart().isBefore(startTime) || doctorShift.getShiftStart().equals(startTime))
-                    && (doctorShift.getShiftEnd().isAfter(endTime) || doctorShift.getShiftEnd().equals(endTime))) {
+            if (doctorShift.getShiftDay().isEqual(date) && (doctorShift.getShiftStart().isBefore(startTime) || doctorShift.getShiftStart().equals(startTime)) && (doctorShift.getShiftEnd().isAfter(endTime) || doctorShift.getShiftEnd().equals(endTime))) {
                 return true;
             }
         }
