@@ -49,7 +49,10 @@ public class BookAppointmentState {
                         } catch (Exception e) {
                             throw new IllegalArgumentException("Wrong time format.");
                         }
-                        clinic.bookAppointment(pesel, doctorId, date, startTime);
+
+                        int defaultAppointmentDuration = 15;
+                        LocalTime endTime = startTime.plusMinutes(defaultAppointmentDuration);
+                        clinic.bookAppointment(pesel, doctorId, date, startTime, endTime);
                     } catch (Exception e) {
                         System.out.println("Error booking appointment: " + e.getMessage());
                         break;

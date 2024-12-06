@@ -40,8 +40,6 @@ public class DoctorShift {
 
     @Override
     public String toString() {
-        return "Shift Start: " + shiftStart +
-                ", Shift End: " + shiftEnd +
-                ", Shift Day: " + shiftDay;
+        return "Shift Start: " + shiftStart + ", Shift End: " + shiftEnd + ", Shift Day: " + shiftDay;
     }
 }

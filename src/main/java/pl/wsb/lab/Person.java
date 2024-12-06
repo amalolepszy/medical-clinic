@@ -4,15 +4,14 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Person {
-    private String firstName;
-    private String lastName;
-    private String pesel;
-    private LocalDate birthDate; // YYYY-MM-DD
-    private String phoneNumber;
-    private String eMail;
+    private final String firstName;
+    private final String lastName;
+    private final String pesel;
+    private final LocalDate birthDate; // YYYY-MM-DD
+    private final String phoneNumber;
+    private final String eMail;
 
-    public Person(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber,
-            String eMail) {
+    public Person(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pesel = pesel;
@@ -54,12 +53,6 @@ public class Person {
     }
 
     public String toString() {
-        return "Name: " + getFirstName() + "\n" +
-                "Last Name: " + getLastName() + "\n" +
-                "PESEL: " + getPesel() + "\n" +
-                "Date of birth: " + getBirthDate() + "\n" +
-                "age: " + calculateAge() + "\n" +
-                "Phone number: " + getPhoneNumber() + "\n" +
-                "Email address: " + getEMail();
+        return "Name: " + getFirstName() + "\n" + "Last Name: " + getLastName() + "\n" + "PESEL: " + getPesel() + "\n" + "Date of birth: " + getBirthDate() + "\n" + "age: " + calculateAge() + "\n" + "Phone number: " + getPhoneNumber() + "\n" + "Email address: " + getEMail();
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public class DoctorRegistry {
-    private List<Doctor> doctors;
+    private final List<Doctor> doctors;
 
     public DoctorRegistry() {
         this.doctors = new ArrayList<>();
@@ -16,11 +16,9 @@ public class DoctorRegistry {
         doctors.add(doctor);
     }
 
-    public void addDoctor(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber,
-            String eMail, Set<String> specialization) {
+    public void addDoctor(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail, Set<String> specialization) {
         int doctorId = doctors.size();
-        Doctor newDoctor = new Doctor(firstName, lastName, pesel, birthDate, phoneNumber, eMail, doctorId,
-                specialization);
+        Doctor newDoctor = new Doctor(firstName, lastName, pesel, birthDate, phoneNumber, eMail, doctorId, specialization);
         doctors.add(newDoctor);
     }
 

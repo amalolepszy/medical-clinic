@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class DoctorRegistryTest {
-    private class TestingDoctorRegistryFactory {
+    private static class TestingDoctorRegistryFactory {
         public DoctorRegistry createTestingDoctorRegistry() {
             DoctorRegistry registry = new DoctorRegistry();
             registry.addDoctor("John", "White", "00000000000", LocalDate.of(2000, 1, 1), "123456789", "test@test.com",

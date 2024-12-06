@@ -11,23 +11,25 @@ public class PatientVisitTimeTableTest {
 
     Doctor testingDoctor;
     Doctor testingDoctor2;
+    Patient testingPatient;
 
     private PatientVisitTimeTableTest() {
         this.testingDoctor = new Doctor("John", "White", "00000000000", LocalDate.of(2000, 1, 1), "123456789", "test@test.com", 0,
                 Set.of("one", "two", "three"));
         this.testingDoctor2 = new Doctor("Jesse", "Pinkman", "00000000000", LocalDate.of(2000, 1, 1), "123456789", "test@test.com", 0,
                 Set.of("one", "two", "three"));
+        this.testingPatient = new Patient("John", "White", "00000000000", LocalDate.of(2000, 1, 1), "123456789", "test@test.com");
     }
 
     private class TestingPatientVisitTimeTableFactory {
         public PatientVisitTimeTable createTestingPatientVisitTimeTable() {
             PatientVisitTimeTable table = new PatientVisitTimeTable();
-            table.addPatientVisit(LocalDate.of(2000, 1, 1), LocalTime.of(10, 0), LocalTime.of(10, 15), testingDoctor);
-            table.addPatientVisit(LocalDate.of(2000, 1, 1), LocalTime.of(10, 30), LocalTime.of(10, 45), testingDoctor);
+            table.addPatientVisit(LocalDate.of(2000, 1, 1), LocalTime.of(10, 0), LocalTime.of(10, 15), testingDoctor, testingPatient);
+            table.addPatientVisit(LocalDate.of(2000, 1, 1), LocalTime.of(10, 30), LocalTime.of(10, 45), testingDoctor, testingPatient);
             // different day
-            table.addPatientVisit(LocalDate.of(2000, 1, 2), LocalTime.of(10, 30), LocalTime.of(10, 45), testingDoctor);
+            table.addPatientVisit(LocalDate.of(2000, 1, 2), LocalTime.of(10, 30), LocalTime.of(10, 45), testingDoctor, testingPatient);
             // different doctor
-            table.addPatientVisit(LocalDate.of(2000, 1, 1), LocalTime.of(10, 0), LocalTime.of(10, 15), testingDoctor2);
+            table.addPatientVisit(LocalDate.of(2000, 1, 1), LocalTime.of(10, 0), LocalTime.of(10, 15), testingDoctor2, testingPatient);
             return table;
         }
     }
