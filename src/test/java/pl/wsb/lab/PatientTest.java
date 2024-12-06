@@ -1,9 +1,9 @@
 package pl.wsb.lab;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
 
 public class PatientTest {
 
@@ -14,7 +14,7 @@ public class PatientTest {
     }
 
     @Test
-    void fullNameIsReturnedCorrectly() {
+    void fullNameIsReturnedCorrectlyTest() {
         TestingPatientFactory factory = new TestingPatientFactory();
         Patient testingPatient = factory.createTestingPatient();
         String fullNameUnderTests = testingPatient.getFullName();
@@ -23,11 +23,11 @@ public class PatientTest {
     }
 
     @Test
-    void ageIsCalculatedCorrectly() {
+    void ageIsCalculatedCorrectlyTest() {
         TestingPatientFactory factory = new TestingPatientFactory();
         Patient testingPatient = factory.createTestingPatient();
         int age = testingPatient.calculateAge();
         int expectedAge = 24;
-        Assertions.assertEquals(age, expectedAge);
+        Assertions.assertEquals(expectedAge, age);
     }
 }

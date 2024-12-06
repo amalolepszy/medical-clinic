@@ -11,7 +11,8 @@ public class Person {
     private String phoneNumber;
     private String eMail;
 
-    public Person(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
+    public Person(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber,
+            String eMail) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pesel = pesel;
@@ -53,7 +54,7 @@ public class Person {
     }
 
     public String toString() {
-        return  "Name: " + getFirstName() + "\n" +
+        return "Name: " + getFirstName() + "\n" +
                 "Last Name: " + getLastName() + "\n" +
                 "PESEL: " + getPesel() + "\n" +
                 "Date of birth: " + getBirthDate() + "\n" +
@@ -62,5 +63,3 @@ public class Person {
                 "Email address: " + getEMail();
     }
 }
-
-

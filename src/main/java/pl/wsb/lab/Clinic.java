@@ -3,17 +3,22 @@ package pl.wsb.lab;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
-
 
 public class Clinic {
     private DoctorRegistry doctorRegistry;
     private PatientRegistry patientRegistry;
-    private DoctorShiftRegistry doctorShiftRegistry;
+    private PatientVisitTimeTable patientVisitTimeTable;
+
+    public Clinic() {
+        doctorRegistry = new DoctorRegistry();
+        patientRegistry = new PatientRegistry();
+        patientVisitTimeTable = new PatientVisitTimeTable();
+    }
 
     // 1.1
-    public void createPatientProfile(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
+    public void createPatientProfile(String firstName, String lastName, String pesel, LocalDate birthDate,
+            String phoneNumber, String eMail) {
         if (patientRegistry.findPatientByPesel(pesel) != null) {
             throw new IllegalArgumentException("Patient with given PESEL already exists.");
         }
@@ -45,7 +50,8 @@ public class Clinic {
     }
 
     // 2.1
-    public void createDoctorProfile(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail, Set<String> specialization) {
+    public void createDoctorProfile(String firstName, String lastName, String pesel, LocalDate birthDate,
+            String phoneNumber, String eMail, Set<String> specialization) {
         doctorRegistry.addDoctor(firstName, lastName, pesel, birthDate, phoneNumber, eMail, specialization);
     }
 
@@ -98,26 +104,50 @@ public class Clinic {
         if (startShift.isAfter(endShift) || startShift.equals(endShift)) {
             throw new IllegalArgumentException("Start time must be before end time");
         }
-        // sprawdzenie czy dzień został wpisany
+
+        DoctorShiftRegistry doctorShiftRegistry = doctor.getDoctorShiftRegistry();
         List<DoctorShift> doctorShifts = doctorShiftRegistry.getDoctorShifts();
         for (DoctorShift doctorShift : doctorShifts) {
-            if (doctorShift.getAssignedDoctor().equals(doctor) && doctorShift.getShiftDay().isEqual(shiftDay)) {
+            if (doctorShift.getShiftDay().isEqual(shiftDay)) {
                 throw new IllegalArgumentException("This doctor has timesheet for that day");
             }
         }
-        doctorShiftRegistry.addDoctorShift(doctor, startShift, endShift, shiftDay);
+
+        doctorShiftRegistry.addDoctorShift(startShift, endShift, shiftDay);
     }
 
     // 4.2
-    public List<DoctorShift> getDoctorShiftsForNext7Days(Doctor doctor, LocalDate fromDate) {
-        if (doctor == null || fromDate == null) {
-            throw new IllegalArgumentException("Values can't be null");
-        }
-        if (!doctorRegistry.getDoctors().contains(doctor)) {
-            throw new IllegalArgumentException("This doctor does not exist");
+    public List<DoctorShift> getDoctorShiftsForNext7Days(int doctorId) {
+        Doctor doctor = doctorRegistry.findDoctorById(doctorId);
+        if (doctor == null) {
+            throw new IllegalArgumentException("Doctor with given ID doesn't exist: " + doctorId);
         }
 
-        return doctorShiftRegistry.listShiftForNextSevenDays(doctor, fromDate);
+        return doctor.getDoctorShiftRegistry().getShiftsForFollowingSevenDays(LocalDate.now());
     }
 
+    // 5.1-5.3
+    public void BookAppointment(String patientPesel, int doctor_id, LocalDate date, LocalTime startTime) {
+        Patient patient = patientRegistry.findPatientByPesel(patientPesel);
+        if (patient == null) {
+            throw new IllegalArgumentException("Patient with given PESEL doesn't exist: " + patientPesel);
+        }
+
+        Doctor doctor = doctorRegistry.findDoctorById(doctor_id);
+        if (doctor == null) {
+            throw new IllegalArgumentException("This doctor does not exist: " + patientPesel);
+        }
+        // 5.2
+        int defaultVisitTimeMinutes = 15;
+        LocalTime endTime = startTime.plusMinutes(defaultVisitTimeMinutes);
+        if (!doctor.HasShiftDuringDateAndTime(date, startTime, endTime)) {
+            throw new IllegalArgumentException("Selected doctor doesn't work at the given time");
+        }
+        // 5.3
+        if (patientVisitTimeTable.isDoctorAssignedForTime(doctor, date, startTime, endTime)) {
+            throw new IllegalArgumentException("Selected doctor already has an appointment booked for selected time");
+        }
+
+        patientVisitTimeTable.addPatientVisit(date, startTime, endTime, doctor);
+    }
 }

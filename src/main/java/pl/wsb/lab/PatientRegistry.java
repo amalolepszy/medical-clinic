@@ -11,17 +11,19 @@ public class PatientRegistry {
         this.patients = new ArrayList<>();
     }
 
-    public void addPatient(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail) {
+    public void addPatient(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber,
+            String eMail) {
         Patient newPatient = new Patient(firstName, lastName, pesel, birthDate, phoneNumber, eMail);
         patients.add(newPatient);
     }
+
     public void addPatient(Patient patient) {
         patients.add(patient);
     }
 
     public Patient findPatientByPesel(String pesel) {
         for (Patient patient : patients) {
-            if (patient.getPesel() == pesel) {
+            if (patient.getPesel().equals(pesel)) {
                 return patient;
             }
         }
@@ -31,7 +33,7 @@ public class PatientRegistry {
     public List<Patient> findPatientsByLastName(String lastName) {
         List<Patient> result = new ArrayList<>();
         for (Patient patient : patients) {
-            if (patient.getLastName().equalsIgnoreCase(lastName)){
+            if (patient.getLastName().equalsIgnoreCase(lastName)) {
                 result.add(patient);
             }
         }
@@ -40,6 +42,5 @@ public class PatientRegistry {
 
     public List<Patient> getAllPatients() {
         return patients;
-//        return new ArrayList<>(patients);
     }
 }

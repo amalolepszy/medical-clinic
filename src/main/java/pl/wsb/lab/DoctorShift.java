@@ -4,25 +4,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class DoctorShift {
-
-    private Doctor assignedDoctor;
     private LocalTime shiftStart;
     private LocalTime shiftEnd;
     private LocalDate shiftDay;
 
-    public DoctorShift(Doctor doctor, LocalTime shiftStart, LocalTime shiftEnd, LocalDate shiftDay) {
-        this.assignedDoctor = doctor;
+    public DoctorShift(LocalTime shiftStart, LocalTime shiftEnd, LocalDate shiftDay) {
         this.shiftStart = shiftStart;
         this.shiftEnd = shiftEnd;
         this.shiftDay = shiftDay;
-    }
-
-    public Doctor getAssignedDoctor() {
-        return assignedDoctor;
-    }
-
-    public void setAssignedDoctor(Doctor doctor) {
-        this.assignedDoctor = doctor;
     }
 
     public LocalTime getShiftStart() {
@@ -51,9 +40,7 @@ public class DoctorShift {
 
     @Override
     public String toString() {
-        return "Doctor Shift: " +
-                "Assigned Doctor: " + assignedDoctor +
-                ", Shift Start: " + shiftStart +
+        return "Shift Start: " + shiftStart +
                 ", Shift End: " + shiftEnd +
                 ", Shift Day: " + shiftDay;
     }

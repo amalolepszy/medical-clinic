@@ -16,15 +16,19 @@ public class DoctorRegistry {
         doctors.add(doctor);
     }
 
-    public void addDoctor(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber, String eMail, Set<String> specialization) {
+    public void addDoctor(String firstName, String lastName, String pesel, LocalDate birthDate, String phoneNumber,
+            String eMail, Set<String> specialization) {
         int doctorId = doctors.size();
-        Doctor newDoctor = new Doctor(firstName, lastName, pesel, birthDate, phoneNumber, eMail, doctorId, specialization);
+        Doctor newDoctor = new Doctor(firstName, lastName, pesel, birthDate, phoneNumber, eMail, doctorId,
+                specialization);
         doctors.add(newDoctor);
     }
 
-    public List<Doctor> getDoctors() {return doctors;}
+    public List<Doctor> getDoctors() {
+        return doctors;
+    }
 
-    //Szukanie po id
+    // Szukanie po id
     public Doctor findDoctorById(int id) {
         for (Doctor doctor : doctors) {
             if (doctor.getDoctorID() == id) {
@@ -34,7 +38,7 @@ public class DoctorRegistry {
         return null;
     }
 
-    //Szukanie po specjalizacji
+    // Szukanie po specjalizacji
     public List<Doctor> findDoctorsBySpecialization(String spec) {
         List<Doctor> result = new ArrayList<>();
         for (Doctor doctor : doctors) {
@@ -43,14 +47,5 @@ public class DoctorRegistry {
             }
         }
         return result;
-    }
-
-    //Listowanie lekarzy
-    public void printDoctors() {
-        System.out.println("List of doctors:");
-        for (Doctor doctor : doctors) {
-            System.out.println(doctor);
-            System.out.println("--------------------");
-        }
     }
 }
