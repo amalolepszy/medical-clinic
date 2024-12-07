@@ -4,5 +4,5 @@ Source code of a group project developed as part of the OOP classes lead by mgr.
 
 # To run:
 ```java
-  java -jar .out/artifacts/lab.jar
+  java -jar ./out/artifacts/lab.jar
 ```
