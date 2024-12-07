@@ -11,6 +11,7 @@ import java.util.TreeSet;
 public class MedicalStaffState {
     public static void renderMedicalStaffState(Clinic clinic, Scanner scanner) {
         while (true) {
+            System.out.print("\033[H\033[2J");
             System.out.flush();
             System.out.println("--- Medical Staff ---");
             System.out.println("1. Create Doctor Profile.");
@@ -75,10 +76,14 @@ public class MedicalStaffState {
                         clinic.createDoctorProfile(firstName, lastName, pesel, birthDate, phoneNumber, eMail, specializations);
                     } catch (Exception e) {
                         System.out.println("Error creating Doctor Profile: " + e.getMessage());
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     }
 
                     System.out.println("Doctor profile created.");
+                    System.out.println("Press Enter to continue...");
+                    scanner.nextLine();
                     break;
                 }
                 case 2: {
@@ -98,9 +103,13 @@ public class MedicalStaffState {
                             clinic.addSpecializationForDoctor(doctorId, specialization);
                         }
                         System.out.println("Specializations successfully added.");
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     } catch (Exception e) {
                         System.out.println("Error adding doctor specializations: " + e.getMessage());
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     }
                 }
@@ -112,9 +121,13 @@ public class MedicalStaffState {
                         String doctorInfo = clinic.getDoctorInfoById(doctorId);
                         System.out.println("Found Doctor:");
                         System.out.println(doctorInfo);
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     } catch (Exception e) {
                         System.out.println("Error finding Doctor: " + e.getMessage());
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     }
                 }
@@ -125,9 +138,13 @@ public class MedicalStaffState {
                         String doctorInfo = clinic.getDoctorsInfoBySpecialization(specialization);
                         System.out.println("Found Doctor(s):");
                         System.out.println(doctorInfo);
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     } catch (Exception e) {
                         System.out.println("Error finding Doctors: " + e.getMessage());
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     }
                 }

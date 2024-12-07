@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class DoctorShiftsState {
     public static void renderDoctorShiftsState(Clinic clinic, Scanner scanner) {
         while (true) {
+            System.out.print("\033[H\033[2J");
             System.out.flush();
             System.out.println("--- Doctor shifts ---");
             System.out.println("1. Assign Doctor to shift.");
@@ -56,10 +57,14 @@ public class DoctorShiftsState {
                         clinic.createDoctorShift(doctorId, startTime, endTime, date);
                     } catch (Exception e) {
                         System.out.println("Error creating Doctor shift: " + e.getMessage());
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     }
 
                     System.out.println("Doctor shift created.");
+                    System.out.println("Press Enter to continue...");
+                    scanner.nextLine();
                     break;
                 }
                 case 2: {
@@ -73,9 +78,13 @@ public class DoctorShiftsState {
 
                         String result = clinic.getDoctorShiftsForNext7Days(doctorId);
                         System.out.println(result);
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     } catch (Exception e) {
                         System.out.println("Error Doctor shifts: " + e.getMessage());
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     }
                 }
