@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class PatientsState {
     public static void renderPatientsState(Clinic clinic, Scanner scanner) {
         while (true) {
+            System.out.print("\033[H\033[2J");
             System.out.flush();
             System.out.println("--- Patients ---");
             System.out.println("1. Create Patient Profile.");
@@ -66,10 +67,14 @@ public class PatientsState {
                         }
                     } catch (Exception e) {
                         System.out.println("Error creating Patient Profile: " + e.getMessage());
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     }
 
                     System.out.println("Patient profile created.");
+                    System.out.println("Press Enter to continue...");
+                    scanner.nextLine();
                     break;
                 }
                 case 2: {
@@ -82,9 +87,13 @@ public class PatientsState {
                         String result = clinic.getPatientInfoByPesel(pesel);
                         System.out.println("Found patient:");
                         System.out.println(result);
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     } catch (Exception e) {
                         System.out.println("Error finding Patient: " + e.getMessage());
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     }
                 }
@@ -98,9 +107,13 @@ public class PatientsState {
                         String result = clinic.getPatientsInfoByLastName(lastName);
                         System.out.println("Found patient(s):");
                         System.out.println(result);
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     } catch (Exception e) {
                         System.out.println("Error finding Patient: " + e.getMessage());
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();;
                         break;
                     }
                 }

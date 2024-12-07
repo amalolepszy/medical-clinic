@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class BookAppointmentState {
     public static void renderBookAppointmentState(Clinic clinic, Scanner scanner) {
         while (true) {
+            System.out.print("\033[H\033[2J");
             System.out.flush();
             System.out.println("--- Book appointment ---");
             System.out.println("1. Book appointment with a doctor.");
@@ -55,10 +56,14 @@ public class BookAppointmentState {
                         clinic.bookAppointment(pesel, doctorId, date, startTime, endTime);
                     } catch (Exception e) {
                         System.out.println("Error booking appointment: " + e.getMessage());
+                        System.out.println("Press Enter to continue...");
+                        scanner.nextLine();
                         break;
                     }
 
                     System.out.println("Appointment booked.");
+                    System.out.println("Press Enter to continue...");
+                    scanner.nextLine();
                     break;
                 }
                 case 2: {
